@@ -29,6 +29,6 @@ for k in globals().keys():
             maxday = day
 
 for i in range(1,maxday+1):
-    answer = str(globals()["day"+str(i)]()
-    print("Day " + str(i) + ": " + answer)
+    answer = str(globals()["day"+str(i)](get_input(str(i))))
+    print("Day " + str(i) + " answer: " + answer)
     #requests.post("http://adventofcode.com/day/" + str(i) + "/answer", data={"level": i, "answer": answer}, cookies={"session": session})
