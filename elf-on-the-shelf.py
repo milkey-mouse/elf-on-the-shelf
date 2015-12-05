@@ -10,6 +10,17 @@ session = "keepthissecret"
 if session == "keepthissecret":
     print("Did you remember to change your session ID?")
 
+def get_input(i):
+    try:
+        with open(i + "_input.txt", "r"):
+            return i.read()
+    except:
+        time.sleep(30)
+        text = requests.get("http://adventofcode.com/day/" + str(i) + "/input", cookies={"session": session}).text
+        with open(i + "_input.txt", "w"):
+            i.write(text)
+        return text
+
 maxday = 0
 for k in globals().keys():
     if k.startswith("day"):
@@ -18,6 +29,6 @@ for k in globals().keys():
             maxday = day
 
 for i in range(1,maxday+1):
-    answer = str(globals()["day"+str(i)](requests.get("http://adventofcode.com/day/" + str(i) + "/input", cookies={"session": session}).text))
-    print("Day " + str(i) + ": " + answer)
-    requests.post("http://adventofcode.com/day/" + str(i) + "/answer", data={"level": i, "answer": answer}, cookies={"session": session})
+    answer = str(globals()["day"+str(i)](get_input(str(i))))
+    print("Day " + str(i) + " answer: " + answer)
+    #requests.post("http://adventofcode.com/day/" + str(i) + "/answer", data={"level": i, "answer": answer}, cookies={"session": session})
